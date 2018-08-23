@@ -1,0 +1,14 @@
+#docker-compose for go project example
+
+#see: https://docs.docker.com/compose/compose-file/#build
+
+version: '3'
+
+services:
+  video-downloader:
+    build: ./
+    image: video-downloader
+    volumes:
+      - ./:/go/src/video-downloader
+    working_dir: /go/src/video-downloader
+    command: go test -v -cover ./...
