@@ -18,7 +18,7 @@ import (
 type U struct {
 	UrlsInfos       []string `mapstructure:"get_video_info_urls"`
 	Delimiter       string   `mapstructure:"url_Delimiter"`
-	Uid_size        int      `mapstructure:"id_number_character"`
+	UidSize         int      `mapstructure:"id_number_character"`
 	QueryKeywordURL string   `mapstructure:"query_key_url"`
 }
 
@@ -40,12 +40,24 @@ func (u *U) Parse(url string) (*downloader.VideoInfos, error) {
 
 // findVideoID - Used to get the UID of the video
 func (u *U) findVideoID(url string) (string, error) {
-	piecesOfURL := strings.Split(url, u.Delimiter)
-	partContainingUID := piecesOfURL[1]
-	if len(partContainingUID) < u.Uid_size {
-		return "", fmt.Errorf("Video ID size [%d] is bigger than the URL piece !", u.Uid_size)
+	if "" == url {
+		return "", errors.New("Empty URL given for `findVideoID`")
 	}
-	return partContainingUID[:u.Uid_size], nil
+	if "" == u.Delimiter {
+		return "", errors.New("Empty delimiter for `findVideoID`")
+	}
+	if u.UidSize <= 0 {
+		return "", errors.New("Empty ID size is <= 0 for `findVideoID`")
+	}
+	piecesOfURL := strings.Split(url, u.Delimiter)
+	if len(piecesOfURL) < 2 {
+		return "", fmt.Errorf("No delimiter [%s] found for within [%s] for `findVideoID`", u.Delimiter, url)
+	}
+	partContainingUID := piecesOfURL[1]
+	if len(partContainingUID) < u.UidSize {
+		return "", fmt.Errorf("Video ID size [%d] is bigger than the URL piece !", u.UidSize)
+	}
+	return partContainingUID[:u.UidSize], nil
 }
 
 func (u *U) fetchVideoInfoURL(urlInfo string) (url.Values, error) {

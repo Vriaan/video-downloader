@@ -3,7 +3,6 @@
 # 	./video-downloader --conf config/video-downloader.yaml ; rm video-downloader \
 
 
-# Launch the program on desktop, it will run using docker mariadb + mailhog on desktop configuration
 # launch_program:
 # 	docker-compose run video-downloader make build_exec
 
