@@ -111,7 +111,7 @@ func (u *U) parseVideoInfo(videoID string) (*downloader.VideoInfos, error) {
 	if nil == infosURLEncoded {
 		return nil, errors.Wrapf(err, "Error no '%s' infos on key found from video information", u.QueryKeywordURL)
 	}
-
+	logrus.Debugf("Found right information using [%s]", videoInfoURL)
 	infosParsed, err := url.ParseQuery(infosURLEncoded[0])
 	if nil != err {
 		return nil, errors.Wrapf(err, "Error parsing '%s' from [%s]", u.QueryKeywordURL, videoInfoURL)

@@ -9,7 +9,7 @@ import (
 
 // This struct contains all information parsing
 type ParsingInformations struct {
-	U *u.U `mapstructure:"u"`
+	U u.U `mapstructure:"u"`
 }
 
 // ParseOn Use the right parser for the page

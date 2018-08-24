@@ -33,9 +33,19 @@ func ReadConfig(configPath string) (*parsingelement.ParsingInformations, error) 
 		return nil, errors.Wrapf(err, "Error Unmarshalling configuration file %s", configPath)
 	}
 
-	// Check viper has populates tructure field
-	if (parsingelement.ParsingInformations{}) == pi {
+	// Check viper has populates structure field
+	if !checkConfigurationLoaded(&pi) {
 		return nil, errors.New("Viper hasn't populated struct from configuration file")
 	}
 	return &pi, nil
+}
+
+// checkConfigurationLoaded - Unmarshal maybe not worked without error.
+// true = is ok | false = not ok
+func checkConfigurationLoaded(pi *parsingelement.ParsingInformations) bool {
+	// default fields value on creation
+	if "" == pi.U.Delimiter && 0 == pi.U.UidSize && nil == pi.U.UrlsInfos && "" == pi.U.QueryKeywordURL {
+		return false
+	}
+	return true
 }

@@ -61,10 +61,10 @@ u:
 	pi, err = configloader.ReadConfig(confFilePath)
 
 	assert.Equal(t, &parsingelement.ParsingInformations{
-		&u.U{
+		u.U{
 			UrlsInfos:       []string{"h", "ht", "htt", "http"},
 			Delimiter:       "uNQS1!",
-			Uid_size:        1,
+			UidSize:         1,
 			QueryKeywordURL: "?:lic!",
 		},
 	}, pi)

@@ -1,13 +1,34 @@
 ------------------------------------
             PURPOSE:
 ------------------------------------
+    This program can get video from some web page is you can use the right configuration for it (if you can find it).
+    I mostly wrote this program for my personnal use and to try golang programming, so you can see it as a POC project.
+
+    If what you need is not a video, but only an audio file from it, there is an option to get it.
+    But it will need to have some libs install as it just use an already existing program to do so:
+        see https://www.ffmpeg.org/ffmpeg.html#Synopsis
 
 
 ------------------------------------
             How it works:
 ------------------------------------
+    Using the configuration, the program will fetch some URL, parse the content in order to find the video URL we want can get the video from
+    The parsing is fixed to some web site and all information about the parsings elements are inside the configuration file.
+    All the parsing informations are loaded in a structure containing all possible parser.
 
+    Each parser then contains its all logical call and it used according to the parser type you asked for.
+    Obviously using a wrong parser type on an URL will fail.
+
+    If the program fails for whatever reason you can get some information about the reasons by turning the logger into "DebugLevel"
+    using the option log-lvl
+
+    If you need more information the --help option should help you :).
 
 ------------------------------------
             Testing
 ------------------------------------
+The test are launch using docker (so you should have install it before), Using
+    $ make test
+
+You can launch the test on you desktop but they should fail if you are not using a "Unix like" system.
+(because the test use path from this system, this is why it is better to run them into a docker)
